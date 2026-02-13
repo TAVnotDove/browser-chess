@@ -1,3 +1,70 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: #1f1f1f;
+    margin: 0;
+    height: 100%;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.flex {
+    display: flex;
+}
+
+.row {
+    display: flex;
+    width: fit-content;
+}
+
+.square {
+    width: 64px;
+    height: 64px;
+}
+
+.row:nth-child(even) .square:nth-child(odd) {
+    background-color: black;
+}
+
+.row:nth-child(even) .square:nth-child(even) {
+    background-color: white;
+}
+
+.row:nth-child(odd) .square:nth-child(odd) {
+    background-color: white;
+}
+
+.row:nth-child(odd) .square:nth-child(even) {
+    background-color: black;
+}
+
+#ranks {
+    display: flex;
+    flex-direction: column;
+}
+
+#files {
+    margin: 10px 0px 0px 64px;
+}
+
+#ranks p,
+#files p {
+    width: 64px;
+    height: 64px;
+    margin: 0;
+    user-select: none;
+    font-size: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 0px 0px 5px black;
+    font-family: Arial, Helvetica, sans-serif;
 }
