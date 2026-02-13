@@ -68,3 +68,40 @@ main {
     text-shadow: 0px 0px 5px black;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+#chessboard {
+    position: relative;
+}
+
+#white-pieces,
+#black-pieces,
+#white-pawns,
+#black-pawns {
+    position: absolute;
+}
+
+#white-pieces {
+    bottom: 0;
+}
+
+#black-pieces {
+    top: 0;
+}
+
+#white-pawns {
+    bottom: 64px;
+}
+
+#black-pawns {
+    top: 64px;
+}
+
+#white-pieces img,
+#black-pieces img,
+#white-pawns img,
+#black-pawns img {
+    width: 64px;
+    height: 64px;
+    filter: drop-shadow(0px 0px 2px white);
+    user-select: none;
+}
