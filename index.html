@@ -23,46 +23,166 @@
                     <p>1</p>
                 </div>
                 <section id="chessboard">
-                    <div id="white-pieces" class="flex">
-                        <img src="assets/pieces/white-rook.svg" alt="white-rook" draggable="false">
-                        <img src="assets/pieces/white-knight.svg" alt="white-knight" draggable="false">
-                        <img src="assets/pieces/white-bishop.svg" alt="white-bishop" draggable="false">
-                        <img src="assets/pieces/white-queen.svg" alt="white-queen" draggable="false">
-                        <img src="assets/pieces/white-king.svg" alt="white-king" draggable="false">
-                        <img src="assets/pieces/white-bishop.svg" alt="white-bishop" draggable="false">
-                        <img src="assets/pieces/white-knight.svg" alt="white-knight" draggable="false">
-                        <img src="assets/pieces/white-rook.svg" alt="white-rook" draggable="false">
-                    </div>
-                    <div id="black-pieces" class="flex">
-                        <img src="assets/pieces/black-rook.svg" alt="black-rook" draggable="false">
-                        <img src="assets/pieces/black-knight.svg" alt="black-knight" draggable="false">
-                        <img src="assets/pieces/black-bishop.svg" alt="black-bishop" draggable="false">
-                        <img src="assets/pieces/black-queen.svg" alt="black-queen" draggable="false">
-                        <img src="assets/pieces/black-king.svg" alt="black-king" draggable="false">
-                        <img src="assets/pieces/black-bishop.svg" alt="black-bishop" draggable="false">
-                        <img src="assets/pieces/black-knight.svg" alt="black-knight" draggable="false">
-                        <img src="assets/pieces/black-rook.svg" alt="black-rook" draggable="false">
-                    </div>
-                    <div id="white-pawns" class="flex">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                        <img src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false">
-                    </div>
-                    <div id="black-pawns" class="flex">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                        <img src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false">
-                    </div>
+                    <img
+                        src="assets/pieces/white-rook.svg" alt="white-rook" draggable="false"
+                        data-row="0" data-column="0"
+                        style="bottom: calc(0 * 64px); left: calc(0 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-knight.svg" alt="white-knight" draggable="false"
+                        data-row="0" data-column="1"
+                        style="bottom: calc(0 * 64px); left: calc(1 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-bishop.svg" alt="white-bishop" draggable="false"
+                        data-row="0" data-column="2"
+                        style="bottom: calc(0 * 64px); left: calc(2 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-queen.svg" alt="white-queen" draggable="false"
+                        data-row="0" data-column="3"
+                        style="bottom: calc(0 * 64px); left: calc(3 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-king.svg" alt="white-king" draggable="false"
+                        data-row="0" data-column="4"
+                        style="bottom: calc(0 * 64px); left: calc(4 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-bishop.svg" alt="white-bishop" draggable="false"
+                        data-row="0" data-column="5"
+                        style="bottom: calc(0 * 64px); left: calc(5 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-knight.svg" alt="white-knight" draggable="false"
+                        data-row="0" data-column="6"
+                        style="bottom: calc(0 * 64px); left: calc(6 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-rook.svg" alt="white-rook" draggable="false"
+                        data-row="0" data-column="7"
+                        style="bottom: calc(0 * 64px); left: calc(7 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-rook.svg" alt="black-rook" draggable="false"
+                        data-row="7" data-column="0"
+                        style="bottom: calc(7 * 64px); left: calc(0 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-knight.svg" alt="black-knight" draggable="false"
+                        data-row="7" data-column="1"
+                        style="bottom: calc(7 * 64px); left: calc(1 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-bishop.svg" alt="black-bishop" draggable="false"
+                        data-row="7" data-column="2"
+                        style="bottom: calc(7 * 64px); left: calc(2 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-queen.svg" alt="black-queen" draggable="false"
+                        data-row="7" data-column="3"
+                        style="bottom: calc(7 * 64px); left: calc(3 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-king.svg" alt="black-king" draggable="false"
+                        data-row="7" data-column="4"
+                        style="bottom: calc(7 * 64px); left: calc(4 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-bishop.svg" alt="black-bishop" draggable="false"
+                        data-row="7" data-column="5"
+                        style="bottom: calc(7 * 64px); left: calc(5 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-knight.svg" alt="black-knight" draggable="false"
+                        data-row="7" data-column="6"
+                        style="bottom: calc(7 * 64px); left: calc(6 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-rook.svg" alt="black-rook" draggable="false"
+                        data-row="7" data-column="7"
+                        style="bottom: calc(7 * 64px); left: calc(7 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="0"
+                        style="bottom: calc(1 * 64px); left: calc(0 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="1"
+                        style="bottom: calc(1 * 64px); left: calc(1 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="2"
+                        style="bottom: calc(1 * 64px); left: calc(2 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="3"
+                        style="bottom: calc(1 * 64px); left: calc(3 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="4"
+                        style="bottom: calc(1 * 64px); left: calc(4 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="5"
+                        style="bottom: calc(1 * 64px); left: calc(5 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="6"
+                        style="bottom: calc(1 * 64px); left: calc(6 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/white-pawn.svg" alt="white-pawn" draggable="false"
+                        data-row="1" data-column="7"
+                        style="bottom: calc(1 * 64px); left: calc(7 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="7"
+                        style="bottom: calc(6 * 64px); left: calc(0 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="0"
+                        style="bottom: calc(6 * 64px); left: calc(1 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="1"
+                        style="bottom: calc(6 * 64px); left: calc(2 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="2"
+                        style="bottom: calc(6 * 64px); left: calc(3 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="3"
+                        style="bottom: calc(6 * 64px); left: calc(4 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="4"
+                        style="bottom: calc(6 * 64px); left: calc(5 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="5"
+                        style="bottom: calc(6 * 64px); left: calc(6 * 64px);"
+                    >
+                    <img
+                        src="assets/pieces/black-pawn.svg" alt="black-pawn" draggable="false"
+                        data-row="6" data-column="6"
+                        style="bottom: calc(6 * 64px); left: calc(7 * 64px);"
+                    >
                     <div class="row">
                         <div class="square" data-row="7" data-column="0"></div>
                         <div class="square" data-row="7" data-column="1"></div>
