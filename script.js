@@ -41,6 +41,8 @@ const pieceDirections = {
 let selectedPiece = null;
 let legalMoves = new Set();
 
+let whiteToMove = true;
+
 function getLegalMoves(row, column, color, type) {
     const moves = [];
 
@@ -85,6 +87,8 @@ function getLegalMoves(row, column, color, type) {
 };
 
 blackPieces.forEach(blackPiece => blackPiece.addEventListener('click', (event) => {
+    if (whiteToMove) return;
+
     selectedPiece = event.currentTarget;
     legalMoves = new Set(
         getLegalMoves(
@@ -96,6 +100,8 @@ blackPieces.forEach(blackPiece => blackPiece.addEventListener('click', (event) =
     );
 }));
 whitePieces.forEach(whitePiece => whitePiece.addEventListener('click', (event) => {
+    if (!whiteToMove) return;
+
     selectedPiece = event.currentTarget;
     legalMoves = new Set(
         getLegalMoves(
@@ -108,6 +114,8 @@ whitePieces.forEach(whitePiece => whitePiece.addEventListener('click', (event) =
     console.log(legalMoves)
 }));
 blackPawns.forEach(blackPawn => blackPawn.addEventListener('click', (event) => {
+    if (whiteToMove) return;
+
     selectedPiece = event.currentTarget;
     legalMoves = new Set(
         getLegalMoves(
@@ -119,6 +127,8 @@ blackPawns.forEach(blackPawn => blackPawn.addEventListener('click', (event) => {
     );
 }));
 whitePawns.forEach(whitePiece => whitePiece.addEventListener('click', (event) => {
+    if (!whiteToMove) return;
+
     selectedPiece = event.currentTarget;
     legalMoves = new Set(
         getLegalMoves(
@@ -140,6 +150,8 @@ squares.forEach(square => square.addEventListener('click', (event) => {
         selectedPiece.dataset.column = column;
         selectedPiece.style.bottom = `calc(${row}*64px)`;
         selectedPiece.style.left = `calc(${column}*64px)`;
+
+        whiteToMove = !whiteToMove;
 
         selectedPiece = null;
     } else {
