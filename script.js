@@ -32,7 +32,7 @@ chessboardMatrix[1] = Array.from(whitePawns);
 const pieceDirections = {
     bishop: [[-1, 1], [1, 1], [1, -1], [-1, -1]],
     knight: [[-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1]],
-    pawn: [[1, 0]],
+    pawn: [[1, 0], [1, -1], [1, 1]],
     queen: [[1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]],
     rook: [[-1, 0], [0, 1], [1, 0], [0, -1]],
     king: [[1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1]],
@@ -59,7 +59,7 @@ function getLegalMoves(row, column, color, type) {
                 moves.push(nRow * 8 + nCol);
 
                 if (chessboardMatrix[nRow][nCol] !== null ||
-                    chessboardMatrix[nRow][nCol] && chessboardMatrix[nRow[nCol].dataset.color === color]
+                    chessboardMatrix[nRow][nCol] && chessboardMatrix[nRow][nCol].dataset.color === color
                 ) break;
 
                 nRow += dRow;
@@ -67,12 +67,19 @@ function getLegalMoves(row, column, color, type) {
             };
         };
     } else {
-        if (color === 'black' && type === 'pawn') {
+        if (type === 'pawn') {
             for (const [dRow, dCol] of pieceDirections[type]) {
-                const nRow = row + dRow * -1;
-                const nCol = column + dCol * -1;
+                const nRow = row + dRow * (color === 'black' ? -1 : 1);
+                const nCol = column + dCol * (color === 'black' ? -1 : 1);
 
-                if (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8 && chessboardMatrix[nRow][nCol] === null) {
+                if (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8) {
+                    if (
+                        (column === nCol && chessboardMatrix[nRow][nCol] !== null) ||
+                        (column !== nCol &&
+                            (chessboardMatrix[nRow][nCol] === null || chessboardMatrix[nRow][nCol].dataset.color === color)
+                        )
+                    ) continue;
+
                     moves.push(nRow * 8 + nCol);
                 };
             };
@@ -82,7 +89,8 @@ function getLegalMoves(row, column, color, type) {
                 const nCol = column + dCol;
                 if (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8) {
                     if (
-                        chessboardMatrix[nRow][nCol] === null
+                        chessboardMatrix[nRow][nCol] === null ||
+                        chessboardMatrix[nRow][nCol] && chessboardMatrix[nRow][nCol].dataset.color !== color
                     ) {
                         moves.push(nRow * 8 + nCol);
                     };
