@@ -55,8 +55,13 @@ function getLegalMoves(row, column, color, type) {
             let nRow = row + dRow;
             let nCol = column + dCol;
 
-            while (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8 && chessboardMatrix[nRow][nCol] === null) {
+            while (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8) {
                 moves.push(nRow * 8 + nCol);
+
+                if (chessboardMatrix[nRow][nCol] !== null ||
+                    chessboardMatrix[nRow][nCol] && chessboardMatrix[nRow[nCol].dataset.color === color]
+                ) break;
+
                 nRow += dRow;
                 nCol += dCol;
             };
@@ -75,9 +80,12 @@ function getLegalMoves(row, column, color, type) {
             for (const [dRow, dCol] of pieceDirections[type]) {
                 const nRow = row + dRow;
                 const nCol = column + dCol;
-
-                if (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8 && chessboardMatrix[nRow][nCol] === null) {
-                    moves.push(nRow * 8 + nCol);
+                if (nRow >= 0 && nRow < 8 && nCol >= 0 && nCol < 8) {
+                    if (
+                        chessboardMatrix[nRow][nCol] === null
+                    ) {
+                        moves.push(nRow * 8 + nCol);
+                    };
                 };
             };
         };
@@ -86,59 +94,48 @@ function getLegalMoves(row, column, color, type) {
     return moves;
 };
 
-blackPieces.forEach(blackPiece => blackPiece.addEventListener('click', (event) => {
-    if (whiteToMove) return;
+function pieceHandler(event, isWhite) {
+    if (selectedPiece) {
+        const row = event.currentTarget.dataset.row * 1;
+        const column = event.currentTarget.dataset.column * 1;
 
-    selectedPiece = event.currentTarget;
-    legalMoves = new Set(
-        getLegalMoves(
-            selectedPiece.dataset.row * 1,
-            selectedPiece.dataset.column * 1,
-            selectedPiece.dataset.color,
-            selectedPiece.dataset.type
-        )
-    );
-}));
-whitePieces.forEach(whitePiece => whitePiece.addEventListener('click', (event) => {
-    if (!whiteToMove) return;
+        if (legalMoves.has(row * 8 + column) && selectedPiece.dataset.color !== event.currentTarget.dataset.color) {
+            chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
+            chessboardMatrix[row][column] = selectedPiece;
+            selectedPiece.dataset.row = row;
+            selectedPiece.dataset.column = column;
+            selectedPiece.style.bottom = `calc(${row}*64px)`;
+            selectedPiece.style.left = `calc(${column}*64px)`;
 
-    selectedPiece = event.currentTarget;
-    legalMoves = new Set(
-        getLegalMoves(
-            selectedPiece.dataset.row * 1,
-            selectedPiece.dataset.column * 1,
-            selectedPiece.dataset.color,
-            selectedPiece.dataset.type
-        )
-    );
-    console.log(legalMoves)
-}));
-blackPawns.forEach(blackPawn => blackPawn.addEventListener('click', (event) => {
-    if (whiteToMove) return;
+            whiteToMove = !whiteToMove;
 
-    selectedPiece = event.currentTarget;
-    legalMoves = new Set(
-        getLegalMoves(
-            selectedPiece.dataset.row * 1,
-            selectedPiece.dataset.column * 1,
-            selectedPiece.dataset.color,
-            selectedPiece.dataset.type
-        )
-    );
-}));
-whitePawns.forEach(whitePiece => whitePiece.addEventListener('click', (event) => {
-    if (!whiteToMove) return;
+            selectedPiece = null;
+            event.currentTarget.remove();
+        } else {
+            selectedPiece = null;
+        };
+    } else {
+        if (
+            (whiteToMove && !isWhite) || 
+            (!whiteToMove && isWhite)
+        ) return;
 
-    selectedPiece = event.currentTarget;
-    legalMoves = new Set(
-        getLegalMoves(
-            selectedPiece.dataset.row * 1,
-            selectedPiece.dataset.column * 1,
-            selectedPiece.dataset.color,
-            selectedPiece.dataset.type
-        )
-    );
-}));
+        selectedPiece = event.currentTarget;
+        legalMoves = new Set(
+            getLegalMoves(
+                selectedPiece.dataset.row * 1,
+                selectedPiece.dataset.column * 1,
+                selectedPiece.dataset.color,
+                selectedPiece.dataset.type
+            )
+        );
+    };
+};
+
+blackPieces.forEach(blackPiece => blackPiece.addEventListener('click', (event) => pieceHandler(event, false)));
+whitePieces.forEach(whitePiece => whitePiece.addEventListener('click', (event) => pieceHandler(event, true)));
+blackPawns.forEach(blackPawn => blackPawn.addEventListener('click', (event) => pieceHandler(event, false)));
+whitePawns.forEach(whitePiece => whitePiece.addEventListener('click', (event) => pieceHandler(event, true)));
 squares.forEach(square => square.addEventListener('click', (event) => {
     const row = event.currentTarget.dataset.row * 1;
     const column = event.currentTarget.dataset.column * 1;
