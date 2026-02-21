@@ -125,9 +125,11 @@ function pieceHandler(event, isWhite) {
 
             whiteToMove = !whiteToMove;
 
+            selectedPiece.classList.toggle('selected');
             selectedPiece = null;
             event.currentTarget.remove();
         } else {
+            selectedPiece.classList.toggle('selected');
             selectedPiece = null;
         };
     } else {
@@ -137,6 +139,7 @@ function pieceHandler(event, isWhite) {
         ) return;
 
         selectedPiece = event.currentTarget;
+        selectedPiece.classList.toggle('selected');
         legalMoves = new Set(
             getLegalMoves(
                 selectedPiece.dataset.row * 1,
@@ -166,8 +169,10 @@ squares.forEach(square => square.addEventListener('click', (event) => {
 
         whiteToMove = !whiteToMove;
 
+        selectedPiece.classList.toggle('selected');
         selectedPiece = null;
     } else {
+        selectedPiece.classList.toggle('selected');
         selectedPiece = null;
     };
 }));

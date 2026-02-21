@@ -80,3 +80,7 @@ main {
     user-select: none;
     position: absolute;
 }
+
+.selected {
+    background-color: gray;
+}
