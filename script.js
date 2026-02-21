@@ -68,6 +68,14 @@ function getLegalMoves(row, column, color, type) {
         };
     } else {
         if (type === 'pawn') {
+            if (row === 1 && color === 'white' && chessboardMatrix[row + 2][column] === null) {
+                moves.push((row + 2) * 8 + column)
+            };
+
+            if (row === 6 && color === 'black' && chessboardMatrix[row - 2][column] === null) {
+                moves.push((row - 2) * 8 + column)
+            };
+
             for (const [dRow, dCol] of pieceDirections[type]) {
                 const nRow = row + dRow * (color === 'black' ? -1 : 1);
                 const nCol = column + dCol * (color === 'black' ? -1 : 1);
