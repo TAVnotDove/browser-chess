@@ -84,3 +84,20 @@ main {
 .selected {
     background-color: gray;
 }
+
+.white-pawn-promotions,
+.black-pawn-promotions {
+    width: 64px;
+    height: 256px;
+    position: absolute;
+    background-color: white;
+    display: none;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.white-pawn-promotions img,
+.black-pawn-promotions img {
+    position: relative !important;
+    cursor: pointer;
+}
