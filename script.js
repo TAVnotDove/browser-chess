@@ -11,6 +11,9 @@ const whiteQueen = document.querySelector('img[alt="white-queen"]');
 const whiteKing = document.querySelector('img[alt="white-king"]');
 const whitePawns = document.querySelectorAll('img[alt="white-pawn"]');
 const squares = document.querySelectorAll('.square');
+const whitePawnPromotions = document.querySelector('.white-pawn-promotions');
+const blackPawnPromotions = document.querySelector('.black-pawn-promotions');
+const chessboard = document.querySelector('#chessboard');
 
 const blackPieces = [
     blackRooks[0], blackKnights[0], blackBishops[0], blackQueen, blackKing, blackBishops[1], blackKnights[1], blackRooks[1]
@@ -116,21 +119,53 @@ function pieceHandler(event, isWhite) {
         const column = event.currentTarget.dataset.column * 1;
 
         if (legalMoves.has(row * 8 + column) && selectedPiece.dataset.color !== event.currentTarget.dataset.color) {
-            chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
-            chessboardMatrix[row][column] = selectedPiece;
-            selectedPiece.dataset.row = row;
-            selectedPiece.dataset.column = column;
-            selectedPiece.style.bottom = `calc(${row}*64px)`;
-            selectedPiece.style.left = `calc(${column}*64px)`;
+            if (selectedPiece.dataset.type === 'pawn') {
+                if (selectedPiece.dataset.color === 'white' && row === 7) {
+                    whitePawnPromotions.style.display = 'flex';
+                    whitePawnPromotions.style.bottom = `calc(${row - 3} * 64px)`;
+                    whitePawnPromotions.style.left = `calc(${column} * 64px)`;
+                    promoteRow = row;
+                    promoteCol = column;
+                } else if (selectedPiece.dataset.color === 'black' && row === 0) {
+                    blackPawnPromotions.style.display = 'flex';
+                    blackPawnPromotions.style.bottom = `calc(${row} * 64px)`;
+                    blackPawnPromotions.style.left = `calc(${column} * 64px)`;
+                    promoteRow = row;
+                    promoteCol = column;
+                } else {
+                    chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
+                    chessboardMatrix[row][column] = selectedPiece;
+                    selectedPiece.dataset.row = row;
+                    selectedPiece.dataset.column = column;
+                    selectedPiece.style.bottom = `calc(${row}*64px)`;
+                    selectedPiece.style.left = `calc(${column}*64px)`;
 
-            whiteToMove = !whiteToMove;
+                    whiteToMove = !whiteToMove;
 
-            selectedPiece.classList.toggle('selected');
-            selectedPiece = null;
-            event.currentTarget.remove();
+                    selectedPiece.classList.toggle('selected');
+                    selectedPiece = null;
+                    event.currentTarget.remove();
+                };
+            } else {
+                chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
+                chessboardMatrix[row][column] = selectedPiece;
+                selectedPiece.dataset.row = row;
+                selectedPiece.dataset.column = column;
+                selectedPiece.style.bottom = `calc(${row}*64px)`;
+                selectedPiece.style.left = `calc(${column}*64px)`;
+
+                whiteToMove = !whiteToMove;
+
+                selectedPiece.classList.toggle('selected');
+                selectedPiece = null;
+                event.currentTarget.remove();
+            }
         } else {
             selectedPiece.classList.toggle('selected');
             selectedPiece = null;
+
+            whitePawnPromotions.style.display = 'none';
+            blackPawnPromotions.style.display = 'none';
         };
     } else {
         if (
@@ -171,8 +206,51 @@ squares.forEach(square => square.addEventListener('click', (event) => {
 
         selectedPiece.classList.toggle('selected');
         selectedPiece = null;
+
+        whitePawnPromotions.style.display = 'none';
+        blackPawnPromotions.style.display = 'none';
     } else {
-        selectedPiece.classList.toggle('selected');
-        selectedPiece = null;
+        if (selectedPiece) {
+            selectedPiece.classList.toggle('selected');
+            selectedPiece = null;
+
+            whitePawnPromotions.style.display = 'none';
+            blackPawnPromotions.style.display = 'none';
+        };
     };
 }));
+
+const pawnPromotions = ['queen', 'rook', 'bishop', 'knight'];
+let promoteRow = 0;
+let promoteCol = 0;
+whitePawnPromotions.querySelectorAll('img').forEach((img, idx) => img.addEventListener('click', () => {
+    promotePawn(whitePawnPromotions, pawnPromotions[idx], 'white')
+}));
+blackPawnPromotions.querySelectorAll('img').forEach((img, idx) => img.addEventListener('click', () => {
+    promotePawn(blackPawnPromotions, pawnPromotions[idx], 'black')
+}));
+
+function promotePawn(container, type, color) {
+    const newPiece = document.createElement('img');
+    newPiece.src = `assets/pieces/${color}-${type}.svg`;
+    newPiece.alt = `${color}-${type}`;
+    newPiece.draggable = 'false';
+    newPiece.dataset.row = promoteRow;
+    newPiece.dataset.column = promoteCol;
+    newPiece.dataset.color = color;
+    newPiece.dataset.type = type;
+    newPiece.style.bottom = `calc(${promoteRow} * 64px)`;
+    newPiece.style.left = `calc(${promoteCol} * 64px)`;
+    newPiece.addEventListener('click', (event) => pieceHandler(event, color === 'white'));
+    chessboard.appendChild(newPiece);
+
+    container.style.display = 'none';
+
+    selectedPiece.remove();
+    selectedPiece = null;
+    
+    chessboardMatrix[promoteRow][promoteCol].remove();
+    
+    chessboardMatrix[promoteRow][promoteCol] = null;
+    whiteToMove = !whiteToMove;
+};
