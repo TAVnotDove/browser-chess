@@ -95,6 +95,34 @@ function getLegalMoves(row, column, color, type) {
                 };
             };
         } else {
+            if (type === 'king' && chessboardMatrix[row][column].dataset.hasMoved === 'false') {
+                if (color === 'white') {
+                    const rightEmpty = !chessboardMatrix[0][5] && !chessboardMatrix[0][6];
+                    const leftEmpty = !chessboardMatrix[0][1] && !chessboardMatrix[0][2] && !chessboardMatrix[0][3];
+                    const rightRook = chessboardMatrix[0][7] && chessboardMatrix[0][7].dataset.hasMoved === 'false';
+                    const leftRook = chessboardMatrix[0][0] && chessboardMatrix[0][0].dataset.hasMoved === 'false';
+
+                    if (leftEmpty && leftRook) {
+                        moves.push(0 * 8 + 2);
+                    };
+                    if (rightEmpty && rightRook) {
+                        moves.push(0 * 8 + 6);
+                    };
+                } else {
+                    const rightEmpty = !chessboardMatrix[7][5] && !chessboardMatrix[7][6];
+                    const leftEmpty = !chessboardMatrix[7][1] && !chessboardMatrix[7][2] && !chessboardMatrix[7][3];
+                    const rightRook = chessboardMatrix[7][7] && chessboardMatrix[7][7].dataset.hasMoved === 'false';
+                    const leftRook = chessboardMatrix[7][0] && chessboardMatrix[7][0].dataset.hasMoved === 'false';
+
+                    if (leftEmpty && leftRook) {
+                        moves.push(7 * 8 + 2);
+                    };
+                    if (rightEmpty && rightRook) {
+                        moves.push(7 * 8 + 6);
+                    };
+                };
+            };
+
             for (const [dRow, dCol] of pieceDirections[type]) {
                 const nRow = row + dRow;
                 const nCol = column + dCol;
@@ -194,7 +222,64 @@ squares.forEach(square => square.addEventListener('click', (event) => {
     const row = event.currentTarget.dataset.row * 1;
     const column = event.currentTarget.dataset.column * 1;
 
-    if (selectedPiece && legalMoves.has(row * 8 + column)) {
+    if (selectedPiece.dataset.type === 'king' && 
+        row === 0 && (column === 2 || column === 6) ||
+        row === 7 && (column === 2 || column === 6)
+    ) {
+        chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
+        chessboardMatrix[row][column] = selectedPiece;
+        selectedPiece.dataset.row = row;
+        selectedPiece.dataset.column = column;
+        selectedPiece.style.bottom = `calc(${row}*64px)`;
+        selectedPiece.style.left = `calc(${column}*64px)`;
+
+        selectedPiece.classList.toggle('selected');
+        selectedPiece = null;
+
+        if (row === 0) {
+            if (column === 2) {
+                const leftRook = chessboardMatrix[0][0];
+                leftRook.dataset.row = 0;
+                leftRook.dataset.column = 3;
+                leftRook.style.bottom = `calc(${0}*64px)`;
+                leftRook.style.left = `calc(${3}*64px)`;
+
+                chessboardMatrix[0][0] = null;
+                chessboardMatrix[0][3] = leftRook
+            } else {
+                const rightRook = chessboardMatrix[0][7];
+                rightRook.dataset.row = 0;
+                rightRook.dataset.column = 5;
+                rightRook.style.bottom = `calc(${0}*64px)`;
+                rightRook.style.left = `calc(${5}*64px)`;
+
+                chessboardMatrix[0][7] = null;
+                chessboardMatrix[0][5] = rightRook
+            };
+        } else {
+            if (column === 2) {
+                const leftRook = chessboardMatrix[7][0];
+                leftRook.dataset.row = 7;
+                leftRook.dataset.column = 3;
+                leftRook.style.bottom = `calc(${7}*64px)`;
+                leftRook.style.left = `calc(${3}*64px)`;
+
+                chessboardMatrix[7][0] = null;
+                chessboardMatrix[7][3] = leftRook
+            } else {
+                const rightRook = chessboardMatrix[7][7];
+                rightRook.dataset.row = 7;
+                rightRook.dataset.column = 5;
+                rightRook.style.bottom = `calc(${7}*64px)`;
+                rightRook.style.left = `calc(${5}*64px)`;
+
+                chessboardMatrix[7][7] = null;
+                chessboardMatrix[7][5] = rightRook
+            };
+        };
+
+        whiteToMove = !whiteToMove;
+    } else if (selectedPiece && legalMoves.has(row * 8 + column)) {
         chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
         chessboardMatrix[row][column] = selectedPiece;
         selectedPiece.dataset.row = row;
