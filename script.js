@@ -222,7 +222,36 @@ squares.forEach(square => square.addEventListener('click', (event) => {
     const row = event.currentTarget.dataset.row * 1;
     const column = event.currentTarget.dataset.column * 1;
 
-    if (selectedPiece.dataset.type === 'king' && 
+    if (selectedPiece.dataset.type === 'pawn') {
+        if (legalMoves.has(row * 8 + column)) {
+            if (selectedPiece.dataset.color === 'white' && row === 7) {
+                whitePawnPromotions.style.display = 'flex';
+                whitePawnPromotions.style.bottom = `calc(${row - 3} * 64px)`;
+                whitePawnPromotions.style.left = `calc(${column} * 64px)`;
+                promoteRow = row;
+                promoteCol = column;
+            } else if (selectedPiece.dataset.color === 'black' && row === 0) {
+                blackPawnPromotions.style.display = 'flex';
+                blackPawnPromotions.style.bottom = `calc(${row} * 64px)`;
+                blackPawnPromotions.style.left = `calc(${column} * 64px)`;
+                promoteRow = row;
+                promoteCol = column;
+            } else {
+                chessboardMatrix[selectedPiece.dataset.row][selectedPiece.dataset.column] = null;
+                chessboardMatrix[row][column] = selectedPiece;
+                selectedPiece.dataset.row = row;
+                selectedPiece.dataset.column = column;
+                selectedPiece.style.bottom = `calc(${row}*64px)`;
+                selectedPiece.style.left = `calc(${column}*64px)`;
+
+                whiteToMove = !whiteToMove;
+
+                selectedPiece.classList.toggle('selected');
+                selectedPiece = null;
+                event.currentTarget.remove();
+            };
+        };
+    } else if (selectedPiece.dataset.type === 'king' && 
         row === 0 && (column === 2 || column === 6) ||
         row === 7 && (column === 2 || column === 6)
     ) {
